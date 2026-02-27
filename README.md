@@ -1,4 +1,5 @@
 # 🧳 AI-Powered Travel Itinerary Planner
+**TripGenius
 
 An AI-driven web application built with **Flask**, **LangChain**, and **Groq** to generate intelligent, personalized travel itineraries. Users can input preferences, upload images, and manage trips effortlessly.
 
