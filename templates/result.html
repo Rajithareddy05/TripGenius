@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="max-width: 900px; margin: 0 auto;">
+  <div class="card" style="margin-bottom: 2rem;">
+    <div
+      style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
+      <h1 style="font-size: 2rem; color: var(--gray-900);">Your {{ trip.days }}-Day Trip to {{ trip.city }}</h1>
+      <div style="display: flex; gap: 1rem;">
+        <button onclick="window.print()" class="btn" style="background: var(--gray-200); color: var(--gray-700);">
+          <i class="fas fa-print"></i> Print
+        </button>
+        <form method="POST" action="{{ url_for('save_trip') }}" id="saveForm">
+          <button type="submit" class="btn btn-primary" id="saveBtn">
+            <i class="fas fa-save"></i> Save Trip
+          </button>
+        </form>
+      </div>
+    </div>
+
+    {% if trip.photos %}
+    <div style="margin-bottom: 2.5rem;">
+      <h2 style="font-size: 1.5rem; margin-bottom: 1.5rem;">Inspiration Gallery</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem;">
+        {% for photo in trip.photos %}
+        <div style="border-radius: var(--rounded-md); overflow: hidden; height: 150px; box-shadow: var(--shadow-sm);">
+          <img src="{{ url_for('static', filename='uploads/' + photo) }}" alt="Inspiration"
+            style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    <div style="line-height: 1.8; color: var(--text-primary);" class="itinerary-content">
+      {% set content = trip.itinerary %}
+      {% set content = content|replace('SUMMARY', '<h3 class="itinerary-section-title">Summary</h3>') %}
+      {% set content = content|replace('DAILY ITINERARY', '<h3 class="itinerary-section-title">Plan by Days</h3>') %}
+      {% set content = content|replace('Day 1:', '<div class="itinerary-day">
+        <div class="day-header">Day 1</div>
+        <div class="day-content">') %}
+          {% set content = content|replace('Day 2:', '</div>
+      </div>
+      <div class="itinerary-day">
+        <div class="day-header">Day 2</div>
+        <div class="day-content">') %}
+          {% set content = content|replace('Day 3:', '</div>
+      </div>
+      <div class="itinerary-day">
+        <div class="day-header">Day 3</div>
+        <div class="day-content">') %}
+          {% set content = content|replace('Day 4:', '</div>
+      </div>
+      <div class="itinerary-day">
+        <div class="day-header">Day 4</div>
+        <div class="day-content">') %}
+          {% set content = content|replace('Day 5:', '</div>
+      </div>
+      <div class="itinerary-day">
+        <div class="day-header">Day 5</div>
+        <div class="day-content">') %}
+          {% set content = content|replace('Day 6:', '</div>
+      </div>
+      <div class="itinerary-day">
+        <div class="day-header">Day 6</div>
+        <div class="day-content">') %}
+          {% set content = content|replace('Day 7:', '</div>
+      </div>
+      <div class="itinerary-day">
+        <div class="day-header">Day 7</div>
+        <div class="day-content">') %}
+          {% set content = content|replace('FOOD RECOMMENDATIONS', '</div>
+      </div>
+      <h3 class="itinerary-section-title">Food Recommendations</h3>') %}
+      {% set content = content|replace('HIDDEN GEMS', '<h3 class="itinerary-section-title">Hidden Gems</h3>') %}
+      {% set content = content|replace('ESTIMATED COSTS', '<h3 class="itinerary-section-title">Estimated Costs</h3>') %}
+      {% set content = content|replace('\n', '<br>') %}
+      {% set content = content|replace('- Morning:', '<strong>Morning:</strong>') %}
+      {% set content = content|replace('- Afternoon:', '<strong>Afternoon:</strong>') %}
+      {% set content = content|replace('- Evening:', '<strong>Evening:</strong>') %}
+
+      {{ content|safe }}
+      {% if 'itinerary-day' in content %}
+    </div>
+  </div>{% endif %}
+</div>
+</div>
+
+<div style="display: flex; justify-content: center; gap: 1.5rem; margin-top: 3rem;">
+  <a href="{{ url_for('generate_trip') }}" class="btn" style="background: var(--gray-200); color: var(--gray-700);">
+    <i class="fas fa-redo"></i> Plan Another
+  </a>
+  <a href="{{ url_for('my_trips') }}" class="btn btn-primary">
+    <i class="fas fa-layer-group"></i> My Trips
+  </a>
+</div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const saveForm = document.getElementById('saveForm');
+    const saveBtn = document.getElementById('saveBtn');
+
+    if (saveForm) {
+      saveForm.addEventListener('submit', function () {
+        saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+        saveBtn.disabled = true;
+      });
+    }
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="max-width: 900px; margin: 0 auto;">
+  <div
+    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem;">
+    <div>
+      <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--gray-900);">{{ trip.city }} Adventure</h1>
+      <p style="color: var(--gray-500);"><i class="far fa-calendar-check" style="margin-right: 0.5rem;"></i> Planned on
+        {{ trip.created_at|datetimeformat('%B %d, %Y') }}</p>
+    </div>
+    <div style="display: flex; gap: 1rem;">
+      <a href="{{ url_for('edit_trip', trip_id=trip_id) }}" class="btn"
+        style="background: var(--white); color: var(--secondary); border: 1px solid var(--gray-200);">
+        <i class="fas fa-edit"></i> Edit Details
+      </a>
+      <a href="{{ url_for('delete_trip', trip_id=trip_id) }}" class="btn btn-delete"
+        style="background: #fee2e2; color: var(--danger);">
+        <i class="fas fa-trash"></i> Delete Trip
+      </a>
+    </div>
+  </div>
+
+  <div class="card" style="padding: 0; overflow: hidden; margin-bottom: 2.5rem;">
+    <div
+      style="display: grid; grid-template-columns: repeat(4, 1fr); background: var(--gray-50); border-bottom: 1px solid var(--gray-200);">
+      <div style="padding: 1.5rem; text-align: center; border-right: 1px solid var(--gray-200);">
+        <p
+          style="font-size: 0.75rem; color: var(--gray-400); text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.5rem;">
+          Destination</p>
+        <p style="font-weight: 600; color: var(--gray-900);">{{ trip.city }}</p>
+      </div>
+      <div style="padding: 1.5rem; text-align: center; border-right: 1px solid var(--gray-200);">
+        <p
+          style="font-size: 0.75rem; color: var(--gray-400); text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.5rem;">
+          Duration</p>
+        <p style="font-weight: 600; color: var(--gray-900);">{{ trip.days }} Days</p>
+      </div>
+      <div style="padding: 1.5rem; text-align: center; border-right: 1px solid var(--gray-200);">
+        <p
+          style="font-size: 0.75rem; color: var(--gray-400); text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.5rem;">
+          Budget</p>
+        <p style="font-weight: 600; color: var(--gray-900);">{{ trip.budget }}</p>
+      </div>
+      <div style="padding: 1.5rem; text-align: center;">
+        <p
+          style="font-size: 0.75rem; color: var(--gray-400); text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.5rem;">
+          Group</p>
+        <p style="font-weight: 600; color: var(--gray-900);">{{ trip.group_type }}</p>
+      </div>
+    </div>
+
+    <div style="padding: 2.5rem;">
+      <div style="line-height: 1.8; color: var(--text-primary);">
+        {% set content = trip.itinerary %}
+        {% set content = content|replace('SUMMARY', '<h3 class="itinerary-section-title" style="margin-top:0;">Summary
+        </h3>') %}
+        {% set content = content|replace('DAILY ITINERARY', '<h3 class="itinerary-section-title">Day-by-Day Journey</h3>
+        ') %}
+        {% set content = content|replace('Day 1:', '<div class="itinerary-day">
+          <div class="day-header">Day 1</div>
+          <div class="day-content">') %}
+            {% set content = content|replace('Day 2:', '</div>
+        </div>
+        <div class="itinerary-day">
+          <div class="day-header">Day 2</div>
+          <div class="day-content">') %}
+            {% set content = content|replace('Day 3:', '</div>
+        </div>
+        <div class="itinerary-day">
+          <div class="day-header">Day 3</div>
+          <div class="day-content">') %}
+            {% set content = content|replace('Day 4:', '</div>
+        </div>
+        <div class="itinerary-day">
+          <div class="day-header">Day 4</div>
+          <div class="day-content">') %}
+            {% set content = content|replace('Day 5:', '</div>
+        </div>
+        <div class="itinerary-day">
+          <div class="day-header">Day 5</div>
+          <div class="day-content">') %}
+            {% set content = content|replace('Day 6:', '</div>
+        </div>
+        <div class="itinerary-day">
+          <div class="day-header">Day 6</div>
+          <div class="day-content">') %}
+            {% set content = content|replace('Day 7:', '</div>
+        </div>
+        <div class="itinerary-day">
+          <div class="day-header">Day 7</div>
+          <div class="day-content">') %}
+            {% set content = content|replace('FOOD RECOMMENDATIONS', '</div>
+        </div>
+        <h3 class="itinerary-section-title">Local Food Guide</h3>') %}
+        {% set content = content|replace('HIDDEN GEMS', '<h3 class="itinerary-section-title">Hidden Gems</h3>') %}
+        {% set content = content|replace('ESTIMATED COSTS', '<h3 class="itinerary-section-title">Estimated Costs</h3>')
+        %}
+        {% set content = content|replace('\n', '<br>') %}
+        {% set content = content|replace('- Morning:', '<strong>Morning:</strong>') %}
+        {% set content = content|replace('- Afternoon:', '<strong>Afternoon:</strong>') %}
+        {% set content = content|replace('- Evening:', '<strong>Evening:</strong>') %}
+
+        {{ content|safe }}
+        {% if 'itinerary-day' in content %}
+      </div>
+    </div>{% endif %}
+  </div>
+</div>
+</div>
+
+<div style="text-align: center; margin-bottom: 4rem;">
+  <a href="{{ url_for('my_trips') }}" class="btn"
+    style="background: var(--gray-100); color: var(--gray-700); padding-left: 2rem; padding-right: 2rem;">
+    <i class="fas fa-arrow-left"></i> Back to My Trips
+  </a>
+</div>
+</div>
+{% endblock %}

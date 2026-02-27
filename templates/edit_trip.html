@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 0 auto;">
+  <div style="text-align: center; margin-bottom: 3rem;">
+    <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">Edit Trip Details</h1>
+    <p style="color: var(--gray-600);">Update your preferences for {{ trip.city }}</p>
+  </div>
+
+  <div class="card">
+    <form method="POST">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+        <div class="form-group" style="margin-bottom: 0;">
+          <label for="city" class="form-label">Destination City</label>
+          <input type="text" id="city" name="city" value="{{ trip.city }}" required class="form-control">
+        </div>
+        <div class="form-group" style="margin-bottom: 0;">
+          <label for="days" class="form-label">Duration (Days)</label>
+          <input type="number" id="days" name="days" min="1" max="30" value="{{ trip.days }}" required
+            class="form-control">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="interests" class="form-label">Your Interests</label>
+        <input type="text" id="interests" name="interests"
+          value="{% if trip.interests is string %}{{ trip.interests }}{% else %}{{ trip.interests|join(', ') }}{% endif %}"
+          required class="form-control">
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+        <div class="form-group" style="margin-bottom: 0;">
+          <label for="transport" class="form-label">Transport</label>
+          <select id="transport" name="transport" required class="form-control">
+            <option value="Public Transport" {% if trip.transport=='Public Transport' %}selected{% endif %}>Public
+              Transport</option>
+            <option value="Rental Car" {% if trip.transport=='Rental Car' %}selected{% endif %}>Rental Car</option>
+            <option value="Walking" {% if trip.transport=='Walking' %}selected{% endif %}>Walking</option>
+            <option value="Private Driver" {% if trip.transport=='Private Driver' %}selected{% endif %}>Private Driver
+            </option>
+          </select>
+        </div>
+        <div class="form-group" style="margin-bottom: 0;">
+          <label for="budget" class="form-label">Budget Range</label>
+          <select id="budget" name="budget" required class="form-control">
+            <option value="Economy" {% if trip.budget=='Economy' %}selected{% endif %}>Economy</option>
+            <option value="Mid-range" {% if trip.budget=='Mid-range' %}selected{% endif %}>Mid-range</option>
+            <option value="Luxury" {% if trip.budget=='Luxury' %}selected{% endif %}>Luxury</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin-bottom: 0;">
+          <label for="group_type" class="form-label">Travel Group</label>
+          <select id="group_type" name="group_type" required class="form-control">
+            <option value="Solo Traveler" {% if trip.group_type=='Solo Traveler' %}selected{% endif %}>Solo Traveler
+            </option>
+            <option value="Couple" {% if trip.group_type=='Couple' %}selected{% endif %}>Couple</option>
+            <option value="Family" {% if trip.group_type=='Family' %}selected{% endif %}>Family</option>
+            <option value="Friends" {% if trip.group_type=='Friends' %}selected{% endif %}>Friends</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 3rem;">
+        <a href="{{ url_for('view_trip', trip_id=trip_id) }}" class="btn"
+          style="background: var(--gray-100); color: var(--gray-700);">
+          Cancel
+        </a>
+        <button type="submit" class="btn btn-primary" style="padding-left: 3rem; padding-right: 3rem;">
+          <i class="fas fa-save" style="margin-right: 0.5rem;"></i> Save Changes
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

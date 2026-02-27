@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="max-width: 1000px; margin: 0 auto;">
+  <div style="text-align: center; margin-bottom: 4rem;">
+    <h1 style="font-size: 3rem; margin-bottom: 1rem;">Get in Touch</h1>
+    <p style="color: var(--gray-600); font-size: 1.1rem;">Have questions or feedback? We'd love to hear from you.</p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 4rem;">
+    <div>
+      <div class="card" style="background: var(--primary); color: var(--white); margin-bottom: 2rem;">
+        <h3 style="color: var(--white); margin-bottom: 1.5rem;">Contact Information</h3>
+        <ul style="list-style: none; padding: 0;">
+          <li style="display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem;">
+            <i class="fas fa-envelope" style="margin-top: 0.3rem;"></i>
+            <div>
+              <p style="margin: 0; font-weight: 600;">Email Us</p>
+              <p style="margin: 0; opacity: 0.8; font-size: 0.9rem;">support@tripgenius.ai</p>
+            </div>
+          </li>
+          <li style="display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem;">
+            <i class="fas fa-phone-alt" style="margin-top: 0.3rem;"></i>
+            <div>
+              <p style="margin: 0; font-weight: 600;">Call Us</p>
+              <p style="margin: 0; opacity: 0.8; font-size: 0.9rem;">+91 8374416778</p>
+            </div>
+          </li>
+          <li style="display: flex; align-items: flex-start; gap: 1rem;">
+            <i class="fas fa-map-marker-alt" style="margin-top: 0.3rem;"></i>
+            <div>
+              <p style="margin: 0; font-weight: 600;">Location</p>
+              <p style="margin: 0; opacity: 0.8; font-size: 0.9rem;">AI Innovation place, Bangalore, India</p>
+            </div>
+          </li>
+        </ul>
+
+        <div style="margin-top: 3rem; display: flex; gap: 1.5rem; font-size: 1.25rem;">
+          <a href="#" style="color: var(--white); opacity: 0.8;"><i class="fab fa-twitter"></i></a>
+          <a href="#" style="color: var(--white); opacity: 0.8;"><i class="fab fa-facebook"></i></a>
+          <a href="#" style="color: var(--white); opacity: 0.8;"><i class="fab fa-instagram"></i></a>
+          <a href="#" style="color: var(--white); opacity: 0.8;"><i class="fab fa-github"></i></a>
+        </div>
+      </div>
+
+      <div style="text-align: center;">
+        <p style="color: var(--gray-500); font-size: 0.9rem;">Response time: Within 24 hours</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <form method="POST">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+          <div class="form-group" style="margin-bottom: 0;">
+            <label for="name" class="form-label">Full Name</label>
+            <input type="text" id="name" name="name" required class="form-control" placeholder="John Doe">
+          </div>
+          <div class="form-group" style="margin-bottom: 0;">
+            <label for="email" class="form-label">Email Address</label>
+            <input type="email" id="email" name="email" required class="form-control" placeholder="john@example.com">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="subject" class="form-label">Subject</label>
+          <select id="subject" name="subject" class="form-control">
+            <option value="General Inquiry">General Inquiry</option>
+            <option value="Technical Support">Technical Support</option>
+            <option value="Partnership">Partnership</option>
+            <option value="Feedback">Feedback</option>
+          </select>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 2rem;">
+          <label for="message" class="form-label">Your Message</label>
+          <textarea id="message" name="message" rows="6" required class="form-control"
+            placeholder="How can we help you?"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem;">
+          <i class="fas fa-paper-plane"></i> Send Message
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Destinations</title>
+</head>
+<body>
+    <h1>Popular Destinations</h1>
+    <div>
+        {% for destination in destinations %}
+            <div>
+                <h2>{{ destination.name }}</h2>
+                <img src="{{ url_for('static', filename='uploads/' + destination.image) }}" alt="{{ destination.name }}">
+                <p>{{ destination.description }}</p>
+            </div>
+        {% endfor %}
+    </div>
+    <a href="/">Back to Home</a>
+</body>
+</html>

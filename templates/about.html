@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="max-width: 900px; margin: 0 auto;">
+  <div style="text-align: center; margin-bottom: 4rem;">
+    <h1 style="font-size: 3rem; margin-bottom: 1.5rem;">About TripGenius</h1>
+    <p style="font-size: 1.25rem; color: var(--gray-600); max-width: 700px; margin: 0 auto;">
+      This project helps travelers plan smart and personalized trips using AI.
+    </p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-bottom: 6rem;">
+    <div>
+      <h2 style="font-size: 2rem; margin-bottom: 1.5rem; color: var(--primary);">Our Vision</h2>
+      <p style="margin-bottom: 1.5rem; color: var(--gray-600);">
+        Travel is about more than just visiting places; it's about the stories we create and the memories we keep.
+        Planning shouldn't be a chore that takes away from the excitement.
+      </p>
+      <p style="color: var(--gray-600);">
+        Our mission is to empower every traveler with a personal concierge that understands their taste, respects their
+        budget, and reveals the soul of every destination.
+      </p>
+    </div>
+    <div
+      style="background: var(--white); padding: 2rem; border-radius: 2rem; box-shadow: var(--shadow-lg); position: relative;">
+      <div style="font-size: 5rem; color: var(--primary); opacity: 0.1; position: absolute; top: 1rem; right: 2rem;">
+        <i class="fas fa-quote-right"></i>
+      </div>
+      <p style="font-style: italic; font-size: 1.1rem; color: var(--gray-700); position: relative; z-index: 1;">
+        "We wanted to build something that feels like talking to a local friend who knows everything about the city
+        you're visiting."
+      </p>
+      <div style="display: flex; align-items: center; gap: 1rem; margin-top: 2rem;">
+        <div style="width: 50px; height: 50px; background: var(--gray-200); border-radius: 50%; overflow: hidden;">
+          <img src="{{ url_for('static', filename='founder.png') }}" alt="Pragyan Kumar"
+            style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div>
+          <h4 style="margin: 0;">Rajitha Reddy</h4>
+          <p style="margin: 0; font-size: 0.85rem; color: var(--gray-500);">Developer & AI Enthusiast</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-bottom: 6rem;">
+    <h2 style="text-align: center; margin-bottom: 3.5rem;">How We Differ</h2>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
+      <div style="text-align: center;">
+        <div style="font-size: 2.5rem; color: var(--primary); margin-bottom: 1rem;">
+          <i class="fas fa-bolt"></i>
+        </div>
+        <h4 style="margin-bottom: 0.75rem;">Instant Results</h4>
+        <p style="font-size: 0.9rem; color: var(--gray-600);">Get a full multi-day plan in under 10 seconds.</p>
+      </div>
+      <div style="text-align: center;">
+        <div style="font-size: 2.5rem; color: var(--accent); margin-bottom: 1rem;">
+          <i class="fas fa-fingerprint"></i>
+        </div>
+        <h4 style="margin-bottom: 0.75rem;">Hyper-Personal</h4>
+        <p style="font-size: 0.9rem; color: var(--gray-600);">No two itineraries are ever the same.</p>
+      </div>
+      <div style="text-align: center;">
+        <div style="font-size: 2.5rem; color: var(--success); margin-bottom: 1rem;">
+          <i class="fas fa-mobile-alt"></i>
+        </div>
+        <h4 style="margin-bottom: 0.75rem;">Always With You</h4>
+        <p style="font-size: 0.9rem; color: var(--gray-600);">Accessible on any device, anywhere in the world.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="background: var(--primary); color: var(--white); text-align: center; padding: 4rem 2rem;">
+    <h2 style="color: var(--white); margin-bottom: 1.5rem;">Ready to see it in action?</h2>
+    <p style="opacity: 0.9; margin-bottom: 2.5rem; max-width: 500px; margin-left: auto; margin-right: auto;">Join our
+      travel community today and start exploring the world your way.</p>
+    <a href="{{ url_for('generate_trip') }}" class="btn"
+      style="background: var(--white); color: var(--primary); padding: 1rem 3rem;">
+      Start Planning Now
+    </a>
+  </div>
+</div>
+{% endblock %}

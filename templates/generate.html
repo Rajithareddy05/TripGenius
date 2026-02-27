@@ -1,0 +1,297 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="generate-container">
+  <div class="generate-header">
+    <h1>Let's Plan Your Journey</h1>
+    <p>Fill in your travel details and let our AI create a masterpiece for you.</p>
+  </div>
+
+  <div class="card planning-card">
+    <form method="POST" enctype="multipart/form-data">
+      <div class="form-row split-row">
+        <div class="form-group">
+          <label for="city" class="form-label">Destination City</label>
+          <input type="text" id="city" name="city" required class="form-control" placeholder="e.g. Kyoto, Japan">
+        </div>
+        <div class="form-group">
+          <label for="days" class="form-label">Duration (Days)</label>
+          <input type="number" id="days" name="days" min="1" max="30" value="5" required class="form-control">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="interests" class="form-label">Your Interests</label>
+        <input type="text" id="interests" name="interests" required
+          placeholder="e.g. photography, street food, temples, hiking" class="form-control">
+        <small class="form-helper">Separate multiple interests with commas</small>
+      </div>
+
+      <div class="form-row triple-row">
+        <div class="form-group">
+          <label for="transport" class="form-label">Transport</label>
+          <select id="transport" name="transport" required class="form-control">
+            <option value="Public Transport">Public Transport</option>
+            <option value="Rental Car">Rental Car</option>
+            <option value="Walking">Walking</option>
+            <option value="Private Driver">Private Driver</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="budget" class="form-label">Budget Range</label>
+          <select id="budget" name="budget" required class="form-control">
+            <option value="Economy">Economy</option>
+            <option value="Mid-range" selected>Mid-range</option>
+            <option value="Luxury">Luxury</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="group_type" class="form-label">Travel Group</label>
+          <select id="group_type" name="group_type" required class="form-control">
+            <option value="Solo Traveler">Solo Traveler</option>
+            <option value="Couple">Couple</option>
+            <option value="Family">Family</option>
+            <option value="Friends">Friends</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group upload-section">
+        <label for="photos" class="form-label">Inspiration Photos (Optional)</label>
+        <div class="upload-wrapper">
+          <div class="upload-input-container">
+            <i class="fas fa-image upload-icon"></i>
+            <input type="file" id="photos" name="photos" multiple accept="image/*">
+            <p class="upload-text">Click or drag photos here</p>
+          </div>
+        </div>
+        <p class="form-helper bottom-helper">Upload photos of places/vibes you want to include in your trip.</p>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary btn-generate" id="generateBtn">
+          <i class="fas fa-magic"></i> <span id="btnText">Generate My Itinerary</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="loadingOverlay">
+  <div class="loading-content">
+    <div class="loading-icon">
+      <i class="fas fa-plane fa-spin"></i>
+    </div>
+    <h2>Crafting Your Adventure...</h2>
+    <p>Our AI is analyzing thousands of possibilities to create your perfect itinerary. This usually takes 10-15
+      seconds.</p>
+    <div class="progress-bar-container">
+      <div class="progress-bar"></div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .generate-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .generate-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .generate-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--gray-900);
+  }
+
+  .generate-header p {
+    color: var(--gray-600);
+    font-size: 1.1rem;
+  }
+
+  .planning-card {
+    padding: 2.5rem;
+  }
+
+  .form-row {
+    display: grid;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .split-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .triple-row {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .form-helper {
+    color: var(--gray-500);
+    font-size: 0.85rem;
+    display: block;
+    margin-top: 0.5rem;
+  }
+
+  .upload-section {
+    background: var(--gray-50);
+    padding: 1.5rem;
+    border-radius: var(--rounded-md);
+    border: 1px dashed var(--gray-300);
+    margin-top: 2rem;
+  }
+
+  .upload-wrapper {
+    margin-top: 1rem;
+  }
+
+  .upload-input-container {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    padding: 2rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .upload-input-container:hover {
+    border-color: var(--primary);
+    background: var(--gray-50);
+  }
+
+  .upload-input-container input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .upload-icon {
+    font-size: 2.5rem;
+    color: var(--gray-300);
+    margin-bottom: 1rem;
+  }
+
+  .upload-text {
+    color: var(--gray-500);
+    font-weight: 500;
+  }
+
+  .bottom-helper {
+    margin-top: 0.75rem;
+  }
+
+  .form-actions {
+    margin-top: 3rem;
+  }
+
+  .btn-generate {
+    width: 100%;
+    padding: 1.25rem;
+    font-size: 1.1rem;
+  }
+
+  /* Loading Overlay */
+  #loadingOverlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    z-index: 2000;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+    transition: var(--transition);
+  }
+
+  .loading-content {
+    text-align: center;
+    max-width: 500px;
+    padding: 2rem;
+  }
+
+  .loading-icon {
+    font-size: 4.5rem;
+    color: var(--primary);
+    margin-bottom: 2.5rem;
+  }
+
+  .loading-content h2 {
+    font-size: 2.25rem;
+    margin-bottom: 1.25rem;
+    color: var(--gray-900);
+  }
+
+  .loading-content p {
+    color: var(--gray-600);
+    line-height: 1.6;
+  }
+
+  .progress-bar-container {
+    margin: 3rem auto 0;
+    width: 250px;
+    height: 6px;
+    background: var(--gray-200);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .progress-bar {
+    width: 100%;
+    height: 100%;
+    background: var(--primary);
+    animation: progress 2s infinite ease-in-out;
+  }
+
+  @keyframes progress {
+    0% {
+      transform: translateX(-100%);
+    }
+
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  @media (max-width: 768px) {
+
+    .split-row,
+    .triple-row {
+      grid-template-columns: 1fr;
+    }
+
+    .planning-card {
+      padding: 1.5rem;
+    }
+
+    .generate-header h1 {
+      font-size: 2rem;
+    }
+  }
+</style>
+
+<script>
+  document.querySelector('form').addEventListener('submit', function () {
+    const btn = document.getElementById('generateBtn');
+    const overlay = document.getElementById('loadingOverlay');
+
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+    overlay.style.display = 'flex';
+  });
+</script>
+{% endblock %}
